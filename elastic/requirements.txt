@@ -1,0 +1,13 @@
+django-filter
+Django==3.1.7
+gunicorn==20.0.4
+whitenoise==5.2.0
+django-cors-headers==3.7.0
+django-jenkins==0.110.0
+boto3==1.17.30
+google-api-python-client==2.0.2
+django-elasticsearch==7.0.2
+requests==2.25.1
+cryptography==3.4.6
+django-detect==1.0.20
+psycopg2-binary
