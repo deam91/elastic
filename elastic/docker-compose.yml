@@ -1,0 +1,56 @@
+version: "2.1"
+services:
+  elastic-api:
+    build: .
+    ports:
+    - "127.0.0.1:8000:8000"
+    environment:
+    - MODE=prod
+    - ELASTIC_HOST=elastic-server:9200
+    volumes:
+    - .:/usr/src/app
+    - ./volumes/elastic-api:/usr/src/app/upload
+    working_dir: "/usr/src/app"
+    entrypoint: "./start.sh"
+    depends_on: 
+    - elastic-db
+    - elastic-server
+    links:
+    - elastic-db
+    - elastic-server
+    restart: always
+    networks:
+      - elastic-example
+
+  elastic-db:
+    image: postgres:10.4
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: elastic
+    ports:
+      - "127.0.0.1:25432:5432"
+    volumes: 
+      - ./volumes/pgdata:/var/lib/postgresql/data
+    networks:
+      - elastic-example
+
+  elastic-server:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.0
+    environment:
+      - node.name=es01
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./volumes/es01:/usr/share/elasticsearch/data
+    networks:
+      - elastic-example
+
+networks:
+  elastic-example:
+    external: true
