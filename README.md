@@ -1,2 +1,2 @@
 # elastic
-Example project of usage of elasticsearch and Django
+Example project using elasticsearch and Django
