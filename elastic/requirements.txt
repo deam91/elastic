@@ -1,5 +1,5 @@
 django-filter
-Django==3.1.12
+Django==3.1.13
 gunicorn==20.0.4
 whitenoise==5.2.0
 django-cors-headers==3.7.0
